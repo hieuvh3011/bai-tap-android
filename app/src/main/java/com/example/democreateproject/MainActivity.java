@@ -1,8 +1,10 @@
 package com.example.democreateproject;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ShareCompat;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,47 +13,55 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+    Button btnOpenWeb;
+    Button btnOpenMap;
+    Button btnShareText;
+
+    final String urlToOpen = "https://developer.android.com/codelabs/android-training-activity-with-implicit-intent?index=..%2F..%2Fandroid-training#3";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        final String TAG = "CNTT-K65";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button btnTest = findViewById(R.id.btn_test);
-        btnTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent testIntent = new Intent(MainActivity.this, ScrollingActivity.class);
-                testIntent.putExtra("test", "test put data in intent");
-
-                Log.d(TAG, "onClick: test log");
-                startActivity(testIntent);
-            }
-        });
+        initView();
+        initEvents();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
+    private void initView() {
+        btnOpenMap = findViewById(R.id.btn_open_map);
+        btnOpenWeb = findViewById(R.id.btn_open_web);
+        btnShareText = findViewById(R.id.btn_share_text);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+    private void initEvents() {
+        btnOpenWeb.setOnClickListener(view -> openWeb());
+        btnOpenMap.setOnClickListener(view -> openMap());
+        btnShareText.setOnClickListener(view -> shareText());
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
+    private void openWeb(){
+        Uri webpage = Uri.parse(urlToOpen);
+        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+        startActivity(intent);
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
+    private void openMap(){
+        String latitude = "21.006257";
+        String longitude = "105.843160";
+        Uri addressUri = Uri.parse("geo:0,0?q=\""+latitude+","+longitude+"\"");
+        Intent intent = new Intent(Intent.ACTION_VIEW, addressUri);
+        startActivity(intent);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    private void shareText(){
+        String mimeType = "text/plain";
+        ShareCompat.IntentBuilder
+                .from(this)
+                .setType(mimeType)
+                .setChooserTitle("Share this text with: ")
+                .setText(getString(R.string.example_text))
+                .startChooser();
+
     }
+
 }

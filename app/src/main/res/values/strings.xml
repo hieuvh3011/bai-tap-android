@@ -92,4 +92,8 @@
     </string>
     <string name="diss_gfam">https://www.youtube.com/watch?v=kefyzfzPs2o&amp;ab_channel=MCNguyena9</string>
     <string name="action_settings">Settings</string>
+    <string name="send_web_request">Gui yeu can mo trang web</string>
+    <string name="display_map">Hien thi ban do o mot vi tri cu the</string>
+    <string name="share_text">Chia se doan van ban ben duoi</string>
+    <string name="example_text">Doan van ban su dung de chia se: Lop CNTT K65 VHVL</string>
 </resources>
