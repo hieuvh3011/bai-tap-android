@@ -1,28 +1,30 @@
 package com.example.democreateproject;
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.view.View;
-
 import com.example.democreateproject.databinding.ActivityScrollingBinding;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 public class ScrollingActivity extends AppCompatActivity {
-
-    private ActivityScrollingBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityScrollingBinding.inflate(getLayoutInflater());
+        com.example.democreateproject.databinding.ActivityScrollingBinding binding = ActivityScrollingBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        Intent receiveIntent = getIntent();
+        String data = receiveIntent.getStringExtra("test");
+
+        Toast.makeText(this, data, Toast.LENGTH_LONG).show();
 
         Toolbar toolbar = binding.toolbar;
         setSupportActionBar(toolbar);
@@ -30,12 +32,7 @@ public class ScrollingActivity extends AppCompatActivity {
         toolBarLayout.setTitle(getTitle());
 
         FloatingActionButton fab = binding.fab;
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show());
     }
 }
